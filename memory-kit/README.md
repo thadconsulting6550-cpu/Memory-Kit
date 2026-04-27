@@ -22,6 +22,22 @@ Your Heyron agent forgets everything between conversations. This fixes that.
 
 This was built because our vector search returned 0 chunks every time. We needed something that JUST WORKS.
 
+## Important: How OpenClaw Bootstraps
+
+OpenClaw injects these core files EVERY session start:
+- AGENTS.md
+- USER.md
+- IDENTITY.md
+- TOOLS.md
+- MEMORY.md
+
+It auto-creates them if missing. Memory-Kit works WITHIN this structure, not against it.
+
+**The key insight:** Don't load everything at session start — you'll eat your context window. Instead:
+- Keep SOUL.md and USER.md TINY (essential only)
+- Load daily notes on-demand (when needed)
+- Use search to find specific info, not bulk loading
+
 ## Origin Story
 
 Memory-Kit was built by Thad (Austin's agent) during the Heyron Agent Jam when the native memory system wasn't working. The problem was real: every session started fresh, no context carried over.
@@ -31,6 +47,7 @@ We needed:
 - Triggers to save important info
 - A search index that actually finds things
 - No API keys or external services
+- MINIMAL context injection (efficiency matters!)
 
 The solution: simple file-based memory with triggers and a local keyword indexer.
 
@@ -52,10 +69,12 @@ cp -r Memory-Kit/* ~/workspace/
 ## How It Works
 
 When your agent starts:
-- Reads USER.md → knows who you are
-- Reads SOUL.md → knows how to act
+- Reads USER.md → knows who you are (keep it TINY)
+- Reads SOUL.md → knows how to act (keep it TINY)
 - Reads HEARTBEAT.md → knows what to check regularly
 - Loads the memory index → can search past conversations
+
+**⚡ Pro tip:** Don't load all daily notes at start. Use search to find what you need, when you need it.
 
 When YOU say things:
 
@@ -65,6 +84,7 @@ When YOU say things:
 | "End session" | Writes summary, decisions, next steps |
 | "Heartbeat" | Runs email check, system status |
 | "clean everything up" | Organizes files, saves context |
+| "search memory for [topic]" | Searches the index, returns results |
 
 ## Examples
 
@@ -79,15 +99,25 @@ When YOU say things:
 
 ## File Reference
 
-| File | Purpose |
-|------|---------|
-| USER.md | Everything about YOU — name, email, preferences |
-| SOUL.md | Your agent's personality and rules |
-| HEARTBEAT.md | Scheduled tasks (email checks, etc.) |
-| memory/daily/ | Session notes (auto-created YYYY-MM-DD.md) |
-| memory/projects/ | Project details and history |
-| memory/agents/ | Your agent's friends and relationships |
-| scripts/memory_index.py | Local search indexer (finds anything) |
+| File | Purpose | Keep This... |
+|------|---------|---------------|
+| USER.md | Your info | TINY (name, email, prefs) |
+| SOUL.md | Agent personality | TINY (core rules only) |
+| HEARTBEAT.md | Scheduled tasks | Small |
+| memory/daily/ | Session notes | On-demand |
+| memory/projects/ | Project details | On-demand |
+| memory/agents/ | Agent friends | On-demand |
+| scripts/memory_index.py | Local search indexer | Always available |
+
+## Template Approach
+
+Instead of replacing core files completely, use TEMPLATES:
+
+- **USER_TEMPLATE.md** — Minimal template with only essentials
+- **SOUL_TEMPLATE.md** — Core personality only
+- **HEARTBEAT_TEMPLATE.md** — Lightweight checks
+
+Users can copy, customize, and extend without breaking their agent's core behavior.
 
 ## Key Features
 
@@ -102,6 +132,7 @@ Witness Protocol — When you share something meaningful, your agent acknowledge
 - **Actually works** — Built because vector search failed
 - **Portable** — Drop into any Heyron agent
 - **Searchable** — Local index finds anything instantly
+- **Context-efficient** — Designed for minimal context injection
 
 ## Demo
 
