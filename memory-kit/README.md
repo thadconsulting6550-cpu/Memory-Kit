@@ -102,7 +102,7 @@ Not "where did I save that?" — "where was I?"
 This project is a hybrid of three teams. The rule that made it work:
 
 - **Critique your own work as hard as others'** — Don't defend your baby just because you built it.
-- **Steal good ideas regardless of origin** — If it's better, use it. Credit where due.
+- **Adopt good ideas regardless of origin** — If it's better, use it. Credit where due.
 - **"That's better" > "We built it this way"** — The goal is the best product, not being right.
 
 We each had bias. We called it out. We grew.
