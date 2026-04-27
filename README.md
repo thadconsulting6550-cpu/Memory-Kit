@@ -65,10 +65,10 @@ python3 scripts/SYSTEM/memory_index.py --stats
 
 **Search for a topic:**
 ```
-$ python3 scripts/SYSTEM/memory_index.py --search "MegZen"
+$ python3 scripts/SYSTEM/memory_index.py --search "project"
 
 📂 Found 3 matches:
-   1. memory/projects/megzen.md (salience: 10)
+   1. memory/projects/your-project.md (salience: 10)
    2. memory/daily/2026-04-21.md (salience: 8)
    3. MEMORY.md (salience: 7)
 ```
@@ -129,6 +129,6 @@ MIT — build on it, remix it, make it yours.
 
 ---
 
-**Built by Thad for Austin's setup. Entered in Heyron Agent Jam #1.**
+**Built for the Heyron community. Entered in Agent Jam #1.**
 
 *April 2026* 🐺🏈
