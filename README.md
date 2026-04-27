@@ -1,139 +1,134 @@
-# 🧠 Agent Memory Kit - FULL VERSION
+# 🧠 Local Memory Indexer
 
-**Ready for the Hackathon** — A complete, working memory system for AI agents.
+**Your agent can't remember shit between sessions? This fixes that.**
 
 ---
 
-## What's Inside
+## The Problem
 
-### Core System
-| File | Purpose |
-|------|---------|
-| `setup.sh` | One-command setup - creates all folders |
-| `load_memory.py` | Session startup - loads context |
-| `USER.md` | Template for user details |
-| `SOUL.md` | Template for agent personality |
-| `HEARTBEAT.md` | Scheduled task config |
+Heyron agents have broken memory. Vector search doesn't work (0 chunks indexed). Your agent forgets everything the moment the conversation ends.
 
-### Memory Scripts (scripts/CORE/)
-| File | Purpose |
-|------|---------|
-| `habit_detector.js` | Tracks user patterns over time |
+## The Solution
 
-### Utilities (scripts/UTILITIES/)
-| File | Purpose |
-|------|---------|
-| `memory_echo.js` | Extracts key moments from daily notes |
-| `intention_check.js` | Reads and manages TODO list |
+Drop this in your container. Run one command. Now your agent actually remembers.
 
-### Docs
-| File | Purpose |
-|------|---------|
-| `docs/TRIGGERS.md` | How to handle Remember/Study/Sync |
+✅ Works offline — no API keys needed  
+✅ Costs $0 — just files on your machine  
+✅ Portable — works in any Heyron container  
+✅ Actually useful — tested in production
+
+---
+
+## What You Get
+
+- **Memory search** — Ask your agent "what did we work on yesterday?" and it FINDS the answer
+- **Keyword indexing** — 1000+ files searchable instantly
+- **Emotional scoring** — Important stuff gets ranked higher
 
 ---
 
 ## Quick Start
 
-```bash
-# 1. Run setup
-./setup.sh
-
-# 2. Edit USER.md with user details
-# 3. Edit SOUL.md with agent personality
-
-# 4. Test it works
-python3 load_memory.py
-node scripts/CORE/habit_detector.js detect
-node scripts/UTILITIES/memory_echo.js
-node scripts/UTILITIES/intention_check.js
-```
-
----
-
-## File Structure
-
-```
-your-agent/
-├── memory/
-│   ├── daily/YYYY-MM-DD.md   # Session logs
-│   ├── lessons/habits.json    # Learned patterns
-│   └── projects/             # Project notes
-├── USER.md                    # User details
-├── SOUL.md                    # Agent personality
-├── HEARTBEAT.md              # Scheduled tasks
-├── load_memory.py            # Session startup
-├── setup.sh                  # Initial setup
-├── todo.md                   # Task list
-└── scripts/
-    ├── CORE/
-    │   └── habit_detector.js
-    └── UTILITIES/
-        ├── memory_echo.js
-        └── intention_check.js
-```
-
----
-
-## Commands Reference
+### 1. Get the files
 
 ```bash
-# Setup
+git clone https://github.com/thadconsulting6550-cpu/Memory-Kit.git ~/memory-kit
+cd ~/memory-kit
+```
+
+### 2. Run setup
+
+```bash
+chmod +x setup.sh
 ./setup.sh
+```
 
-# Session start
-python3 load_memory.py
+### 3. Build the index (one time)
 
-# Track a pattern
-node scripts/CORE/habit_detector.js track phrase "hello" "greeting"
-node scripts/CORE/habit_detector.js track action "new session" "startup"
+```bash
+python3 scripts/SYSTEM/memory_index.py --build
+```
 
-# View patterns
-node scripts/CORE/habit_detector.js detect
-node scripts/CORE/habit_detector.js stats
-node scripts/CORE/habit_detector.js top
+### 4. Use it
 
-# Memory echo
-node scripts/UTILITIES/memory_echo.js          # last 7 days
-node scripts/UTILITIES/memory_echo.js 14      # last 14 days
-node scripts/UTILITIES/memory_echo.js key "memory"
+Now your agent can search memory:
 
-# Intentions/TODO
-node scripts/UTILITIES/intention_check.js
-node scripts/UTILITIES/intention_check.js add "Learn Linux"
-node scripts/UTILITIES/intention_check.js done 1
+```
+python3 scripts/SYSTEM/memory_index.py --search "domain"
+python3 scripts/SYSTEM/memory_index.py --query "what did we discuss"
+python3 scripts/SYSTEM/memory_index.py --stats
 ```
 
 ---
 
-## The Golden Rule
+## What It Looks Like
 
-> If you're going to ask Google, ask YOUR AI INSTEAD.
+**Search for a topic:**
+```
+$ python3 scripts/SYSTEM/memory_index.py --search "MegZen"
 
-The more users ask their agent to DO, the smarter it gets — AND the more they learn!
+📂 Found 3 matches:
+   1. memory/projects/megzen.md (salience: 10)
+   2. memory/daily/2026-04-21.md (salience: 8)
+   3. MEMORY.md (salience: 7)
+```
 
----
+**Ask a question:**
+```
+$ python3 scripts/SYSTEM/memory_index.py --query "what did we work on today"
 
-## What Makes This Different
-
-1. **Tested in production** — This isn't theory, it actually runs
-2. **Works offline** — No external APIs needed
-3. **Grows with use** — More patterns = smarter agent
-4. **Portable** — Drop into any agent workspace
-
----
-
-## Hackathon Demo Ideas
-
-- "Hey, what's my memory echo?" → shows key moments
-- "What's my empire look like?" → project status
-- "What do I need to do?" → reads TODO
-- "What patterns do you know about me?" → habit detector
+📝 Found:
+   - memory/daily/2026-04-26.md: "Hackathon prep - memory-kit built"
+```
 
 ---
 
-## Credits
+## Why This Wins
 
-Built by **Thad** for Austin's setup. Evolved through The Den community.
+| Criteria | How We Score |
+|----------|---------------|
+| **Usefulness** | Solves real problem — agents actually remember |
+| **Portability** | Drop into any container, works immediately |
+| **Originality** | Novel local-first approach (no vector DB needed) |
+| **Documentation** | You just read it ✅ |
 
-*April 2026* 🐺
+---
+
+## Requirements
+
+- Heyron container with Python 3
+- That's it. No API keys. No external services.
+
+---
+
+## What's Inside
+
+| File | Purpose |
+|------|---------|
+| `scripts/SYSTEM/memory_index.py` | The core indexer (this is the magic) |
+| `load_memory.py` | Session startup script |
+| `setup.sh` | Creates folder structure |
+| `SKILL.md` | Agent-readable instructions |
+| `docs/TRIGGERS.md` | Memory trigger patterns |
+
+---
+
+## Demo Ideas
+
+Ask your agent:
+- "What did we work on today?"
+- "Show me our friends"
+- "What's my email?"
+- "What projects are we working on?"
+
+---
+
+## License
+
+MIT — build on it, remix it, make it yours.
+
+---
+
+**Built by Thad for Austin's setup. Entered in Heyron Agent Jam #1.**
+
+*April 2026* 🐺🏈
