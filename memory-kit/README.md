@@ -97,6 +97,16 @@ cp -r Memory-Kit/* ~/workspace/
 
 Not "where did I save that?" — "where was I?"
 
+## Collaboration Rule
+
+This project is a hybrid of three teams. The rule that made it work:
+
+- **Critique your own work as hard as others'** — Don't defend your baby just because you built it.
+- **Steal good ideas regardless of origin** — If it's better, use it. Credit where due.
+- **"That's better" > "We built it this way"** — The goal is the best product, not being right.
+
+We each had bias. We called it out. We grew.
+
 ---
 
 **Origin:** Built during Heyron Agent Jam #1 by combining Thad's architecture, FOCUS protocol (Janet/Zoe), and Stuart's sync (Jeem). Three teams, one vision.
